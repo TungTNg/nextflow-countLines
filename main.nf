@@ -3,19 +3,19 @@ nextflow.enable.dsl=2
 
 params.list_file = 'list.txt'
 
-process countLines {
+process countLinesOfFile {
   input: 
-    path list_file
+    path file_path
+  
+  output:
+    stdout
+
   script:
-    file_content = file(list_file)
-    all_files = file_content.readLines()
-    for(each_file : all_files) {
-      println "File: ${each_file} has total of ${file(each_file).countLines()} lines "
-    }
     """
+    wc -l $file_path
     """
 }
 
 workflow {
-  Channel.fromPath(params.list_file) | countLines
+  Channel.fromPath(file(params.list_file).readLines()) | countLinesOfFile | view
 }
