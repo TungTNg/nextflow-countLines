@@ -1,17 +1,21 @@
 #!/usr/bin/env nextflow
 nextflow.enable.dsl=2 
 
-process sayHello {
+params.list_file = 'list.txt'
+
+process countLinesOfFile {
   input: 
-    val x
+    path file_path
+  
   output:
     stdout
+
   script:
     """
-    echo '$x world!'
+    wc -l $file_path
     """
 }
 
 workflow {
-  Channel.of('Bonjour', 'Ciao', 'Hello', 'Hola') | sayHello | view
+  Channel.fromPath(file(params.list_file).readLines()) | countLinesOfFile | view
 }

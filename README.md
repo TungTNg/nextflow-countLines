@@ -1,4 +1,4 @@
-Hello world script
+Nextflow -> Count Lines script
 ====================
 
-A simple script showing the basic Hello World! example for the Nextflow framework. 
+A simple script to count lines in each file of a provided list for the Nextflow framework. 
